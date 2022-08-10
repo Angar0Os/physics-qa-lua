@@ -13,8 +13,9 @@ function CreateCubeCollision(scene, size, mass)
 	return col
 end
 
-function CreatePhysicCubeWithRBType(scene, size, mtx, model_ref, materials, mass, rb_type)
+function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
+	local mass = mass or 0
 	local node = hg.CreateObject(scene, mtx, model_ref, materials)
 	node:SetName("Physic Cube")
 	local rb = scene:CreateRigidBody()

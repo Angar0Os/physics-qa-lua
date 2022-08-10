@@ -61,7 +61,8 @@ function main()
 	local physics = hg.SceneBullet3Physics()
 	physics:SceneCreatePhysicsFromAssets(scene)
 	local physics_step = hg.time_from_sec_f(1 / 60)
-	local display_physics_debug = true 
+	local display_physics_debug = true
+	local physics_node_wake = true
 
 	-- imgui
 	local imgui_prg = hg.LoadProgramFromAssets('core/shader/imgui')
@@ -128,7 +129,9 @@ function main()
 			physics:SceneCreatePhysicsFromAssets(scene)
 		end
 
-		physics:NodeWake(cube_node)
+		if physics_node_wake then
+			physics:NodeWake(cube_node)
+		end
 
 		hg.SceneUpdateSystems(scene, clocks, dt, physics, physics_step, 3)
 		view_id, pass_id = hg.SubmitSceneToPipeline(view_id, scene, hg.IntRect(0, 0, res_x, res_y), true, pipeline, res)
@@ -154,6 +157,7 @@ function main()
 		hg.ImGuiBeginFrame(res_x, res_y, hg.TickClock(), hg.ReadMouse(), hg.ReadKeyboard())
 
 		if hg.ImGuiBegin('Physics Test') then
+			_, physics_node_wake = hg.ImGuiCheckbox('Physics node wake', physics_node_wake)
 			_, display_physics_debug = hg.ImGuiCheckbox('Display physics debug', display_physics_debug)
 			hg.ImGuiSeparator()
 			hg.ImGuiText('Use the Arrow keys (left/right/up/down)')

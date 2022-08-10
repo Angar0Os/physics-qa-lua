@@ -33,12 +33,10 @@ function main()
 	local vtx_layout = hg.VertexLayoutPosFloatNormUInt8()
 
 	local cube_size =  hg.Vec3(1, 1, 1)
-	local cube_mdl = hg.CreateCubeModel(vtx_layout, cube_size.x, cube_size.y, cube_size.z)
-	local cube_ref = res:AddModel('cube', cube_mdl)
+	local cube_ref = res:AddModel('cube', hg.CreateCubeModel(vtx_layout, cube_size.x, cube_size.y, cube_size.z))
 
 	local ground_size = hg.Vec3(4, 0.05, 4)
-	local ground_mdl = hg.CreateCubeModel(vtx_layout, ground_size.x, ground_size.y, ground_size.z)
-	local ground_ref = res:AddModel('ground', ground_mdl)
+	local ground_ref = res:AddModel('ground', hg.CreateCubeModel(vtx_layout, ground_size.x, ground_size.y, ground_size.z))
 
 	-- setup scene
 	local scene = hg.Scene()

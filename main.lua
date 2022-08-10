@@ -192,6 +192,7 @@ function main()
 			hg.ImGuiText('Use the Arrow keys (left/right/up/down)')
 			hg.ImGuiText('L_Shift = Apply Impulse instead of Force')
 			hg.ImGuiText('L_Ctrl = Apply to a corner instead of the center')
+			hg.ImGuiText('SPACE = Reset')
 		end
 		hg.ImGuiEnd()
 	

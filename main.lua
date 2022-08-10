@@ -2,8 +2,8 @@
 hg = require("harfang")
 require("shared")
 
-function CreatePhysicsTestNode(scene, cube_ref, mat_red)
-	local cube_node = CreatePhysicCubeEx(scene, hg.Vec3(1, 1, 1), hg.TranslationMat4(hg.Vec3(0, 2.5, 0)), cube_ref, {mat_red}, hg.RBT_Dynamic, 2)
+function CreatePhysicsTestNode(scene, size, cube_ref, mat_red)
+	local cube_node = CreatePhysicCubeEx(scene, size, hg.TranslationMat4(hg.Vec3(0, 2.5, 0)), cube_ref, {mat_red}, hg.RBT_Dynamic, 2)
 	return cube_node
 end
 
@@ -32,7 +32,8 @@ function main()
 	-- create models
 	local vtx_layout = hg.VertexLayoutPosFloatNormUInt8()
 
-	local cube_mdl = hg.CreateCubeModel(vtx_layout, 1, 1, 1)
+	local cube_size =  hg.Vec3(1, 1, 1)
+	local cube_mdl = hg.CreateCubeModel(vtx_layout, cube_size.x, cube_size.y, cube_size.z)
 	local cube_ref = res:AddModel('cube', cube_mdl)
 
 	local ground_size = hg.Vec3(4, 0.05, 4)
@@ -52,7 +53,7 @@ function main()
 
 	local lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.0001, hg.Vec4(2, 4, 10, 16))
 
-	local cube_node = CreatePhysicsTestNode(scene, cube_ref, mat_red)
+	local cube_node = CreatePhysicsTestNode(scene, cube_size, cube_ref, mat_red)
 	local ground_node = CreatePhysicCubeEx(scene, ground_size, hg.TranslationMat4(hg.Vec3(0, -0.005, 0)), ground_ref, {mat_grey}, hg.RBT_Static, 0)
 
 	local clocks = hg.SceneClocks()
@@ -125,7 +126,7 @@ function main()
 			physics:NodeDestroyPhysics(cube_node)
 			scene:DestroyNode(cube_node)
             scene:GarbageCollect()	
-			cube_node = CreatePhysicsTestNode(scene, cube_ref, mat_red)
+			cube_node = CreatePhysicsTestNode(scene, cube_size, cube_ref, mat_red)
 			physics:SceneCreatePhysicsFromAssets(scene)
 		end
 

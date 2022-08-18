@@ -52,7 +52,7 @@ ground_ref = res:AddModel('ground', hg.CreateCubeModel(vtx_layout, ground_size.x
 -- setup the scene
 scene = hg.Scene()
 
-cam_mat = hg.TransformationMat4(hg.Vec3(-2, 5, -7) * 1.2, hg.Vec3(hg.Deg(25), hg.Deg(25), 0))
+cam_mat = hg.TransformationMat4(hg.Vec3(-3.5, 6, -8.5), hg.Vec3(hg.Deg(25), hg.Deg(25), 0))
 cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000)
 view_matrix = hg.InverseFast(cam_mat)
 c = cam:GetCamera()
@@ -64,12 +64,15 @@ lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec
 
 cube_list = {}
 for i = 1, 5 do
-    cube_node, cube_rb = CreatePhysicCubeEx(scene, cube_size, hg.TranslationMat4(hg.Vec3(5.5, 6.0, i - 2.5)), cube_ref, {mat_grey}, hg.RBT_Dynamic, 1.0)
-    cube_rb:SetFriction((i - 1) / 4.0)
+    cube_node, cube_rb = CreatePhysicCubeEx(scene, cube_size, hg.TranslationMat4(hg.Vec3(5.5, 5.0, i - 2.5)), cube_ref, {mat_grey}, hg.RBT_Dynamic, 1.0)
+    friction = (i - 1) / 4.0
+    print("friction = " .. friction)
+    cube_rb:SetFriction(friction)
     cube_rb:SetLinearDamping(0.0)
     table.insert(cube_list, cube_node)
 end
-CreatePhysicCubeEx(scene, ground_size, hg.TranslationMat4(hg.Vec3(0, -0.005, 0)), ground_ref, {mat_grey}, hg.RBT_Static, 0)
+
+CreatePhysicCubeEx(scene, ground_size, hg.TranslationMat4(hg.Vec3(-2, -0.005, 0)), ground_ref, {mat_grey}, hg.RBT_Static, 0)
 CreatePhysicCubeEx(scene, ground_size, hg.TransformationMat4(hg.Vec3(4.5, 2.85, 0), hg.Vec3(0, 0, math.pi/4)), ground_ref, {mat_grey}, hg.RBT_Static, 0)
 
 -- scene physics

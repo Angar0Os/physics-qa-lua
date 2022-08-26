@@ -59,10 +59,6 @@ mat_grey = hg.CreateMaterial(pbr_shader, 'uBaseOpacityColor', hg.Vec4(1, 1, 1), 
 -- create models
 vtx_layout = hg.VertexLayoutPosFloatNormUInt8()
 
--- cube
-cube_size =  hg.Vec3(1, 0.25, 1)
-cube_ref = res:AddModel('cube', hg.CreateCubeModel(vtx_layout, cube_size.x, cube_size.y, cube_size.z))
-
 -- sphere
 sphere_radius = 0.8
 sphere_ref = res:AddModel('sphere', hg.CreateSphereModel(vtx_layout, sphere_radius, 8, 8))
@@ -86,8 +82,8 @@ lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec
 
 sphere_list = {}
 for i = 1, 11 do
-    sphere_node, sphere_rb = CreatePhysicSphereEx(scene, sphere_radius, hg.TranslationMat4(hg.Vec3(-14, 0.8, -10 + 2 * i)), sphere_ref, {mat_grey}, hg.RBT_Dynamic, 15.0)
-    rollingfriction = (i - 1) / 10.0 
+    sphere_node, sphere_rb = CreatePhysicSphereEx(scene, sphere_radius, hg.TranslationMat4(hg.Vec3(-14, 0.8, -14 + 2 * i)), sphere_ref, {mat_grey}, hg.RBT_Dynamic, 15.0)
+    rollingfriction = 1 - ((i - 1) / 10.0)
     print("rollingfriction = " .. rollingfriction)
     sphere_rb:SetRollingFriction(rollingfriction)
 
@@ -112,7 +108,6 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     keyboard:Update()
 
     for i=1,#sphere_list do
-        physics:NodeWake(sphere_list[i])
 		physics:NodeAddForce(sphere_list[i], hg.Vec3(50, 0, 0))
     end
 

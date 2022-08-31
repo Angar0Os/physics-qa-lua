@@ -1,5 +1,9 @@
 hg = require("harfang")
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Shoot N raycast toward a collection of Node + Rigid bodies + Collision shapes of various types.\n>>> Red if the raycast hit nothing.\n>>> Green if the raycast hit a node.")
+
 function CreatePhysicCapsuleEx(scene, radius, height, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0

@@ -1,5 +1,10 @@
 hg = require("harfang")
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Apply a constant force on N spheres having a rolling friction factor from 0.0 (far) to 1.0 (near).")
+
+
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0
@@ -45,7 +50,7 @@ hg.WindowSystemInit()
 res_x, res_y = 1280, 720
 win = hg.RenderInit('Physics Test', res_x, res_y, hg.RF_VSync | hg.RF_MSAA4X)
 
-pipeline = hg.CreateForwardPipeline()
+pipeline = hg.CreateForwardPipeline(2048)
 res = hg.PipelineResources()
 
 -- physics debug
@@ -78,7 +83,7 @@ projection_matrix = hg.ComputePerspectiveProjectionMatrix(c:GetZNear(), c:GetZFa
 
 scene:SetCurrentCamera(cam)	
 
-lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.00025, hg.Vec4(2, 4, 10, 16))
+lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(-30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.00075, hg.Vec4(10, 20, 30, 50))
 
 sphere_list = {}
 for i = 1, 11 do

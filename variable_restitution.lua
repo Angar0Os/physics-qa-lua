@@ -1,5 +1,9 @@
 hg = require("harfang")
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Drop N spheres with a restitution factor from 0.0 (left) to 1.0 (right).")
+
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0
@@ -74,21 +78,21 @@ ground_ref = res:AddModel('ground', hg.CreateCubeModel(vtx_layout, ground_size.x
 -- setup the scene
 scene = hg.Scene()
 
-cam_mat = hg.TransformationMat4(hg.Vec3(-2, 6, -8.5), hg.Vec3(hg.Deg(25), 0, 0))
-cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000)
+cam_mat = hg.TransformationMat4(hg.Vec3(-2, 6, -8.5), hg.Vec3(hg.Deg(15), 0, 0))
+cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000, hg.Deg(35))
 view_matrix = hg.InverseFast(cam_mat)
 c = cam:GetCamera()
 projection_matrix = hg.ComputePerspectiveProjectionMatrix(c:GetZNear(), c:GetZFar(), hg.FovToZoomFactor(c:GetFov()), hg.Vec2(res_x / res_y, 1))
 
 scene:SetCurrentCamera(cam)	
 
-lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.00025, hg.Vec4(2, 4, 10, 16))
+lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.00025, hg.Vec4(10, 15, 20, 25))
 
 sphere_list = {}
 for i = 1, 5 do
     sphere_node, sphere_rb = CreatePhysicSphereEx(scene, sphere_radius, hg.TranslationMat4(hg.Vec3(2 * i - 8, 5.0, 2.5)), sphere_ref, {mat_grey}, hg.RBT_Dynamic, 1.0)
     restitution = (i - 1) / 4.0
-    print("restitution = " .. restitution)
+    -- print("restitution = " .. restitution)
     sphere_rb:SetRestitution(restitution)
     sphere_rb:SetLinearDamping(0.0)
     table.insert(sphere_list, sphere_node)

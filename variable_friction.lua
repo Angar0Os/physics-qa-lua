@@ -1,5 +1,9 @@
 hg = require("harfang")
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Drop N bricks with a friction from 0.0 (near) to 1.0 (far).")
+
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0

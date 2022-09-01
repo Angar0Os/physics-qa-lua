@@ -80,6 +80,10 @@ clocks = hg.SceneClocks()
 vel = 1.0
 physics:NodeSetLinearVelocity(cube_node, hg.Vec3(vel,0,0))
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Set the velocity of a cube, once, before entering the main rendering loop. No damping and no fricton.")
+
 -- main loop
 keyboard = hg.Keyboard()
 
@@ -88,7 +92,7 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
 
     physics:NodeWake(cube_node)
 
-    print("Initial vel = " .. vel .. ", vel = " .. physics:NodeGetLinearVelocity(cube_node).x)
+    -- print("Initial vel = " .. vel .. ", vel = " .. physics:NodeGetLinearVelocity(cube_node).x)
 
     view_id = 0
     hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, physics_step, 3)

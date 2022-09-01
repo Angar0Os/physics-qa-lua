@@ -1,9 +1,5 @@
 hg = require("harfang")
 
--- description
-hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Drop N spheres with a restitution factor from 0.0 (left) to 1.0 (right).")
-
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0
@@ -108,6 +104,10 @@ physics_step = hg.time_from_sec_f(1 / 60)
 dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
+
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Drop N spheres with a restitution factor from 0.0 (left) to 1.0 (right).")
 
 -- main loop
 keyboard = hg.Keyboard()

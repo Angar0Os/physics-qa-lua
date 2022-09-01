@@ -73,6 +73,10 @@ clocks = hg.SceneClocks()
 physics:NodeSetLinearFactor(cube_node, hg.Vec3(0.0, 0.0, 0.0))
 physics:NodeAddTorque(cube_node, hg.Vec3(0 ,0 , math.pi * 100.0))
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Apply a torque on a brick, only once, before entering the main rendering loop. The brick position is locked on X, Y, Z, its rotation is locked on Y and Z. No damping and no fricton.")
+
 -- main loop
 keyboard = hg.Keyboard()
 

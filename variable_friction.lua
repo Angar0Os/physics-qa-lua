@@ -1,9 +1,5 @@
 hg = require("harfang")
 
--- description
-hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Drop N bricks with a friction from 0.0 (near) to 1.0 (far).")
-
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0
@@ -86,6 +82,10 @@ physics_step = hg.time_from_sec_f(1 / 60)
 dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
+
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Drop N bricks with a friction from 0.0 (near) to 1.0 (far).")
 
 -- main loop
 keyboard = hg.Keyboard()

@@ -1,10 +1,5 @@
 hg = require("harfang")
 
--- description
-hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Apply a constant force on N spheres having a rolling friction factor from 0.0 (far) to 1.0 (near).")
-
-
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
 	local mass = mass or 0
@@ -105,6 +100,10 @@ physics_step = hg.time_from_sec_f(1 / 60)
 dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
+
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Apply a constant force on N spheres having a rolling friction factor from 0.0 (far) to 1.0 (near).")
 
 -- main loop
 keyboard = hg.Keyboard()

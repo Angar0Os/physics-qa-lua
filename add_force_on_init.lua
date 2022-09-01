@@ -79,6 +79,10 @@ clocks = hg.SceneClocks()
 -- apply force
 physics:NodeAddForce(cube_node, hg.Vec3(-25.0,0,0))
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Apply a force on a cube, only once, before entering the main rendering loop. No damping and no fricton.")
+
 -- main loop
 keyboard = hg.Keyboard()
 

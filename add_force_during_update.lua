@@ -76,6 +76,10 @@ dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Apply a constant force on a cube. No damping and no fricton.")
+
 -- main loop
 keyboard = hg.Keyboard()
 

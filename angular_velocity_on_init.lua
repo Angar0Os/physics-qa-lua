@@ -74,6 +74,11 @@ physics:NodeSetLinearFactor(cube_node, hg.Vec3(0.0, 0.0, 0.0))
 vel = math.pi * 2.0
 physics:NodeSetAngularVelocity(cube_node, hg.Vec3(0 ,0 , vel))
 
+-- description
+hg.SetLogLevel(hg.LL_Normal)
+print(">>> Description:\n>>> Set the angular velocity of a brick, only once, before entering the main rendering loop. The brick position is locked on X, Y, Z, its rotation is locked on Y and Z. No damping and no fricton.")
+
+
 -- main loop
 keyboard = hg.Keyboard()
 

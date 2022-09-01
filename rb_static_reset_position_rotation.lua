@@ -72,7 +72,7 @@ clocks = hg.SceneClocks()
 
 -- description
 hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Set the position and rotation of a static cube in the rendering loop. The cube shall not move (?????????)")
+print(">>> Description:\n>>> Set the position and rotation and Reset the World Matrix (same position and rotation) of a static cube in the rendering loop. The cube shall move from left to right and rotate on its Y axis.")
 
 -- main loop
 keyboard = hg.Keyboard()
@@ -87,6 +87,7 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     _rot = hg.Vec3(0.0,  math.pi * frame_count / 360.0, 0.0)    
     cube_node:GetTransform():SetPos(_pos)
     cube_node:GetTransform():SetRot(_rot)
+    physics:NodeResetWorld(cube_node, hg.TransformationMat4(_pos, _rot))
 
     view_id = 0
     hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, physics_step, 3)

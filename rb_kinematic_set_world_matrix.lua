@@ -82,7 +82,7 @@ local frame_count = 0
 while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     keyboard:Update()
 
-    -- apply force
+    -- Set world matrix (position / rotation)
     _pos = hg.Vec3((math.fmod(frame_count, 200.0) - 100.0) / 100.0, 0.0, 0.0)
     _rot = hg.Vec3(0.0,  math.pi * frame_count / 360.0, 0.0)
     cube_node:GetTransform():SetWorld(hg.TransformationMat4(_pos, _rot))

@@ -82,7 +82,7 @@ local frame_count = 0
 while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     keyboard:Update()
 
-    -- apply force
+    -- apply torque
     physics:NodeAddTorque(cube_node, hg.Vec3(0 ,0 , math.pi * 10000.0))
 
     view_id = 0

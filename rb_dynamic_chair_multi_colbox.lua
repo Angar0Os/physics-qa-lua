@@ -1,8 +1,6 @@
 hg = require("harfang")
 
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
-	local rb_type = rb_type or hg.RBT_Dynamic
-	local mass = mass or 0
 	local node = hg.CreateObject(scene, mtx, model_ref, materials)
 	node:SetName("Physic Cube")
 	local rb = scene:CreateRigidBody()
@@ -52,7 +50,7 @@ ground_ref = res:AddModel('ground', hg.CreateCubeModel(vtx_layout, ground_size.x
 -- setup the scene
 scene = hg.Scene()
 
-cam_mat = hg.TransformationMat4(hg.Vec3(-2, 6, -8.5), hg.Vec3(hg.Deg(15), 0, 0))
+cam_mat = hg.TransformationMat4(hg.Vec3(-2, 6, -15.5), hg.Vec3(hg.Deg(15), 0, 0))
 cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000, hg.Deg(35))
 view_matrix = hg.InverseFast(cam_mat)
 c = cam:GetCamera()
@@ -62,7 +60,11 @@ scene:SetCurrentCamera(cam)
 
 lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.00025, hg.Vec4(10, 15, 20, 25))
 
-cube_node, cube_rb = CreatePhysicCubeEx(scene, cube_size, hg.TranslationMat4(hg.Vec3(-6, 5.0, 2.5)), cube_ref, {mat_grey}, hg.RBT_Dynamic, 1.0)
+chair_node, _ = hg.CreateInstanceFromAssets(scene, hg.TranslationMat4(hg.Vec3(0, 1, 0)), "chair/chair.scn", res, hg.GetForwardPipelineInfo())
+
+for i = 1, 10 do
+    hg.CreateInstanceFromAssets(scene, hg.TranslationMat4(hg.Vec3(0, 1 + i * 5, 0)), "chair/chair.scn", res, hg.GetForwardPipelineInfo())
+end
 
 floor, rb_floor = CreatePhysicCubeEx(scene, ground_size, hg.TranslationMat4(hg.Vec3(-2, -0.005, 0)), ground_ref, {mat_grey}, hg.RBT_Static, 0)
 rb_floor:SetRestitution(1)
@@ -75,11 +77,9 @@ dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
 
-paircontacts = physics:NodeCollideWorld(floor, hg.TranslationMat4(hg.Vec3(-2, -0.005, 0)))
-
 -- description
 hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Drop a cube and print out the amount of collisions.")
+print(">>> Description:\n>>> Drop N spheres with a restitution factor from 0.0 (left) to 1.0 (right).")
 
 -- main loop
 keyboard = hg.Keyboard()
@@ -87,15 +87,10 @@ keyboard = hg.Keyboard()
 while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     keyboard:Update()
 
-    physics:NodeWake(cube_node)
-
+    physics:NodeWake(chair_node)
     view_id = 0
-    hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, paircontacts, physics_step, 3)
+    hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, physics_step, 3)
     view_id, pass_id = hg.SubmitSceneToPipeline(view_id, scene, hg.IntRect(0, 0, res_x, res_y), true, pipeline, res)
-
-	physics:CollectCollisionEvents(scene, paircontacts)
-	contact_list = hg.GetNodesInContact(scene, floor, paircontacts)
-	print(contact_list:size())
 
     -- Debug physics display
     hg.SetViewClear(view_id, 0, 0, 1.0, 0)

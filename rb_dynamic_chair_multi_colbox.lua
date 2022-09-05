@@ -79,7 +79,7 @@ clocks = hg.SceneClocks()
 
 -- description
 hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Drop N spheres with a restitution factor from 0.0 (left) to 1.0 (right).")
+print(">>> Description:\n>>> Drop vertically 200 chairs, made of 6 collision boxes each")
 
 -- main loop
 keyboard = hg.Keyboard()

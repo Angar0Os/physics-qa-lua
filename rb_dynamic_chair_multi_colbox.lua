@@ -25,7 +25,7 @@ hg.WindowSystemInit()
 res_x, res_y = 1280, 720
 win = hg.RenderInit('Physics Test', res_x, res_y, hg.RF_VSync | hg.RF_MSAA4X)
 
-pipeline = hg.CreateForwardPipeline()
+pipeline = hg.CreateForwardPipeline(2048)
 res = hg.PipelineResources()
 
 -- physics debug
@@ -58,7 +58,7 @@ projection_matrix = hg.ComputePerspectiveProjectionMatrix(c:GetZNear(), c:GetZFa
 
 scene:SetCurrentCamera(cam)	
 
-lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.00075, hg.Vec4(20, 34, 55, 70))
+lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.001, hg.Vec4(20, 34, 55, 70))
 
 -- chair_node, _ = hg.CreateInstanceFromAssets(scene, hg.TranslationMat4(hg.Vec3(0, 1, 0)), "chair/chair.scn", res, hg.GetForwardPipelineInfo())
 

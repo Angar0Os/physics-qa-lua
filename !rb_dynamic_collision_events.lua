@@ -70,19 +70,28 @@ rb_floor:SetRestitution(1)
 -- scene physics
 physics = hg.SceneBullet3Physics()
 physics:SceneCreatePhysicsFromAssets(scene)
+-- physics:NodeCreatePhysicsFromAssets(floor)
+-- physics:NodeCreatePhysicsFromAssets(cube_node)
 physics_step = hg.time_from_sec_f(1 / 60)
 dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
 
-paircontacts = physics:NodeCollideWorld(floor, hg.TranslationMat4(hg.Vec3(-2, -0.005, 0)))
-
 -- description
-hg.SetLogLevel(hg.LL_Normal)
+-- hg.SetLogLevel(hg.LL_Normal)
 print(">>> Description:\n>>> Drop a cube and print out the amount of collisions.")
 
 -- main loop
 keyboard = hg.Keyboard()
+physics:NodeStartTrackingCollisionEvents(cube_node)
+-- physics:NodeStartTrackingCollisionEvents(floor)
+
+-- Le test fonctionne correctement dans cette configuration,
+-- or, si l'on track le floor au lieu du cube, ou que l'on track les deux et que l'on passe le floor 
+-- en premier parametre de la fonction GetNodePairContacts (au lieu d'etre en 2e param actuellement),
+-- le test échoue.
+-- Si on y rajoute un NodeCreatePhysicsFromAssets(floor), il n'échoue plus en le passant en premier
+-- paramètre, malgré le SceneCreatePhysicsFromAssets(scene) n'étant pas commenté
 
 while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     keyboard:Update()
@@ -90,12 +99,12 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     physics:NodeWake(cube_node)
 
     view_id = 0
-    hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, paircontacts, physics_step, 3)
+    hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, physics_step, 3)
     view_id, pass_id = hg.SubmitSceneToPipeline(view_id, scene, hg.IntRect(0, 0, res_x, res_y), true, pipeline, res)
 
-	physics:CollectCollisionEvents(scene, paircontacts)
-	contact_list = hg.GetNodesInContact(scene, floor, paircontacts)
-	print(contact_list:size())
+	paircontacts = physics:CollectCollisionEvents(scene)
+	nodes_in_contact = hg.GetNodePairContacts(cube_node, floor, paircontacts)
+	print(nodes_in_contact:size())
 
     -- Debug physics display
     hg.SetViewClear(view_id, 0, 0, 1.0, 0)

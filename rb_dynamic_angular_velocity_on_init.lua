@@ -87,7 +87,7 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
 
     physics:NodeWake(cube_node)
 
-    print("Initial vel = " .. vel .. ", vel = " .. physics:NodeGetAngularVelocity(cube_node).z)
+    -- print("Initial vel = " .. vel .. ", vel = " .. physics:NodeGetAngularVelocity(cube_node).z)
 
     view_id = 0
     hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, physics_step, 3)

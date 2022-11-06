@@ -104,7 +104,7 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
 
 	paircontacts = physics:CollectCollisionEvents(scene)
 	nodes_in_contact = hg.GetNodePairContacts(cube_node, floor, paircontacts)
-	print(nodes_in_contact:size())
+	print("nodes_in_contact:" .. nodes_in_contact:size())
 
     -- Debug physics display
     hg.SetViewClear(view_id, 0, 0, 1.0, 0)

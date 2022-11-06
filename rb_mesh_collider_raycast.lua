@@ -19,7 +19,7 @@ line_shader = hg.LoadProgramFromAssets("shaders/pos_rgb")
 -- setup the scene
 scene = hg.Scene()
 
-cam_mat = hg.TransformationMat4(hg.Vec3(0, 10, -30), hg.Vec3(hg.Deg(20), 0, 0))
+cam_mat = hg.TransformationMat4(hg.Vec3(0, 1.0, -2.15), hg.Vec3(hg.Deg(30), 0, 0))
 cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000)
 view_matrix = hg.InverseFast(cam_mat)
 c = cam:GetCamera()
@@ -107,8 +107,8 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     --     end
     -- end
 
-    for i = -20, 20 do
-        for o = -20, 20 do
+    for i = -20, 20, 2 do
+        for o = -20, 20, 2 do
             start_pos = hg.Vec3(0 + i * 0.05, 0.1, 0 + o * 0.05)
             end_pos = hg.Vec3(0 + i * 0.05, -0.1, 0 + o * 0.05)
             raycast_out = physics:RaycastFirstHit(scene, start_pos, end_pos)

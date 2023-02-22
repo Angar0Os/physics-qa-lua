@@ -1,48 +1,56 @@
+# HARFANG Physics QA tests
 
-```
-shape de coll
-	vérifier les dimensions, correspondance entre ScenePhysicDebug et dimensions spécifiées
-		-> petit contrôle visual avec studio bienvenu
-	vérifier transformations
-	gestion correcte de multi shape (eg. chaise avec multiple box coll)
+![](img/rb_dynamic_chair_multi_colbox.png)
 
-type de body
-	static
-		pas de réaction aux forces (gravité, force, impulse, collisions)
-		pas déplacable
+A series of test, implemented in Lua, for QA'ing the integration of [Bullet Physics](https://github.com/bulletphysics) into HARFANG.
+Each `.lua` unit as a specific purpose. The list below is meant to set an overall roadmap of the topics to be tested:
 
-	kinematic
-		- pas de réaction aux forces (gravité, force, impulse, collisions)
-		- déplacable en code
-			- récupérer les coord modifiées ?
+## Collision shapes
 
-		- parentage de kinematic doit marcher
-			- via instantiation
-			- via animation
+- check dimensions, matching ScenePhysicDebug with specified dimensions
+  - quick visual check with HG Studio is welcome
+- check transformations
+- correct handling of multi shape (eg. chair with multiple box coll)
 
-	dynamic
-		réaction aux forces (gravité, force, impulse, torque, collisions)
+## Body types (cube, sphere, cylinder...)
 
-	interaction entre types
+- static
+  - no reaction to forces (gravity, force, impulse, collisions)
+  - cannot be moved
 
-		- intéraction statique/kinematique
-			-> collision event devraient être levés ! (ex implémenter un character controller à la main)
-		- intéraction kinematique/dynamique (plateforme mobile sur lequel se trouve un cube/sphere/cone)
-			-> vérifier collision event
-		- interaction dynamique/dynamique
+- kinematic
+  - no reaction to forces (gravity, force, impulse, collisions)
+  - movable in code
+    - get() new coordinates?
 
-raycast
-	bouton r qui balance 4 raycast offset dans l'espace vue sur X et Y et affiche en 3d les points d'intersection (rayon blanc jusqu'au point d'intersection ou rouge si pas d'intersection)
+  - kinematic parenting must work
+    - via instantiation
+    - via animation
+
+- dynamic
+  - reaction to forces (gravity, force, impulse, torque, collisions)
+
+- interaction between types
+  - static/kinematic interaction
+    - collision event should be raised! (e.g. implement a character controller by hand)
+  - kinematic/dynamic interaction (moving platform with a cube/sphere/cone on it)
+    - check collision event
+  - dynamic/dynamic interaction
+
+## Raycast
+- Press the `R` key to casts 4 raycasts offseted on X and Y view space and displays in 3d the intersection points (white ray to the intersection point or red if no intersection)
 	
-collision event
-	write écran du nombre de coll dans la frame
-	prévoir une sortie visuelle (ScenePhysicDebug probablement)
+## Collision event
+- display the number of collisions in the frame
+- provide visual output (ScenePhysicDebug probably)
 
-restitution
-	sol avec 10 cubes qui rebondissent depuis une hauteur prédéfinie (0, 0.1, 0.2, 0.3, etc...)
+## Restitution
+- ground plane with 10 cubes bouncing from a pre-defined height (0, 0.1, 0.2, 0.3, etc...)
 
-friction
-	planche avec 10 cubes qui glissent (0, 0.1, 0.2, 0.3, etc...)
+## Friction
+- ground plane with 10 sliding cubes (0, 0.1, 0.2, 0.3, etc.)
 
-ajout/suppression d'élément physiques
-```
+## Addition/removal of physical elements
+ - `TODO`
+
+![](img/rb_raycast_various_collshapes.png)

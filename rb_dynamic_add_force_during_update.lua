@@ -78,7 +78,7 @@ clocks = hg.SceneClocks()
 
 -- description
 hg.SetLogLevel(hg.LL_Normal)
-print(">>> Description:\n>>> Apply a constant force on a cube. No damping and no friction.")
+print(">>> Description:\n>>> Apply a constant force on a cube. No damping and no fricton.")
 
 -- main loop
 keyboard = hg.Keyboard()

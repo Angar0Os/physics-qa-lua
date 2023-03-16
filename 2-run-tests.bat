@@ -22,4 +22,5 @@ bin\lua.exe rb_rings_chain.lua
 bin\lua.exe rb_static_reset_position_rotation.lua
 bin\lua.exe rb_static_reset_world_matrix.lua
 bin\lua.exe rb_static_set_position_rotation.lua
+bin\lua.exe rb_mesh_collider_raycast_mesh_terrain.lua
 pause

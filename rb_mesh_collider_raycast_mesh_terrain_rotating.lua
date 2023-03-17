@@ -41,7 +41,7 @@ clocks = hg.SceneClocks()
 -- description
 hg.SetLogLevel(hg.LL_Normal)
 print(
-    ">>> Description:\n>>> Create a mesh collider with a rotating terrain collider from its .physics_bullet file and test the collisions with raycasts.\n" ..
+    ">>> Description:\n>>> Create a mesh collider with a terrain collider from its .physics_bullet file and test the collisions with raycasts.\n" ..
     ">>> the 'Island chain` 3D model (65k triangles, 30x12Km) is a courtesy of World Machine.")
 
 island_node = scene:GetNode("island_chain")
@@ -53,7 +53,7 @@ island_node:SetCollision(0, mesh_col)
 
 -- create rigid body
 rb = scene:CreateRigidBody()
-rb:SetType(hg.RBT_Static)
+rb:SetType(hg.RBT_Kinematic)
 island_node:SetRigidBody(rb)
 physics:NodeCreatePhysicsFromAssets(island_node)
 
@@ -71,6 +71,12 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     mouse:Update()
 
     dt = hg.TickClock()
+
+    island_node:GetTransform():SetRot(hg.Vec3(0.0,  math.pi * frame_count / 360.0, 0.0))
+    -- Set world matrix (position / rotation)
+    -- _pos = hg.Vec3(0.0, 0.0, 0.0)
+    -- _rot = hg.Vec3(0.0,  math.pi * frame_count / 360.0, 0.0)
+    -- island_node:GetTransform():SetWorld(hg.TransformationMat4(_pos, _rot))
 
     if keyboard:Down(hg.K_LShift) then
         s = 2000
@@ -99,7 +105,7 @@ while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
                 vtx:Clear()
                 vtx:Begin(0):SetPos((start_pos + end_pos) * 0.5):SetColor0(hg.Color.Red):End()
                 vtx:Begin(1):SetPos(end_pos):SetColor0(hg.Color.Red):End()
-                hg.DrawLines(vid_scene_opaque, vtx, line_shader) -- submit all lines in a single call                             
+                hg.DrawLines(vid_scene_opaque, vtx, line_shader) -- submit all lines in a single call                
             end
         end
     end

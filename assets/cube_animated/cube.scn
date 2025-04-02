@@ -91,6 +91,26 @@
 				2.0
 			],
 			"type": "cube"
+		},
+		{
+			"mass": 1.0,
+			"path": "",
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				2.0,
+				2.0,
+				2.0
+			],
+			"type": "cube"
 		}
 	],
 	"environment": {
@@ -150,9 +170,105 @@
 			"disabled": false,
 			"idx": 0,
 			"name": "Cube"
+		},
+		{
+			"collisions": [
+				{
+					"idx": 1
+				}
+			],
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				1
+			],
+			"disabled": false,
+			"idx": 2,
+			"name": "Cube"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 3,
+			"name": "Node"
+		},
+		{
+			"components": [
+				3,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 4,
+			"name": "Node"
 		}
 	],
 	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "Material"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.800000011920929,
+								0.800000011920929,
+								0.800000011920929,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.25,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "cube_animated/Cube_38.geo"
+		},
 		{
 			"bones": [],
 			"material_infos": [
@@ -217,6 +333,14 @@
 			"restitution": 0.0,
 			"rolling_friction": 0.0,
 			"type": "kinematic"
+		},
+		{
+			"angular_damping": 0.0,
+			"friction": 0.49803924560546875,
+			"linear_damping": 0.0,
+			"restitution": 0.0,
+			"rolling_friction": 0.0,
+			"type": "kinematic"
 		}
 	],
 	"scene_anims": [
@@ -244,6 +368,60 @@
 			],
 			"rot": [
 				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				3.5,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 2,
+			"pos": [
+				0.0,
+				-1.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
 				0.0,
 				0.0
 			],

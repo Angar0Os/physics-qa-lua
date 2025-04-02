@@ -18,6 +18,117 @@ function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mas
 	return node, rb
 end
 
+function GetNodes(scene, paths)
+    local nodes = {}
+    for key, path in pairs(paths) do
+        nodes[key] = scene:GetNodeEx(path)
+    end
+    return nodes
+end
+
+local node_paths = {
+    chest = "chest",
+    chest_bone = "chest/chest_bone",
+    chest_joint_to_head = "chest/chest_joint_to_head",
+    chest_joint_to_right_arm_2 = "chest/chest_joint_to_right_arm_2",
+    chest_joint_to_right_arm_3 = "chest/chest_joint_to_right_arm_3",
+    chest_joint_to_left_arm_2 = "chest/chest_joint_to_left_arm_2",
+    chest_joint_to_left_arm_3 = "chest/chest_joint_to_left_arm_3",
+    chest_joint_to_right_leg = "chest/chest_joint_to_right_leg",
+    chest_joint_to_right_leg_2 = "chest/chest_joint_to_right_leg_2",
+    chest_joint_to_right_leg_3 = "chest/chest_joint_to_right_leg_3",
+    chest_joint_to_right_leg_4 = "chest/chest_joint_to_right_leg_4",
+    chest_joint_to_left_leg = "chest/chest_joint_to_left_leg",
+    chest_joint_to_left_leg_2 = "chest/chest_joint_to_left_leg_2",
+    chest_joint_to_left_leg_3 = "chest/chest_joint_to_left_leg_3",
+    chest_joint_to_left_leg_4 = "chest/chest_joint_to_left_leg_4",
+    left_leg_joint_to_chest = "left_leg/left_leg_joint_to_chest",
+    left_leg_joint_to_chest_2 = "left_leg/left_leg_joint_to_chest_2",
+    left_leg_joint_to_chest_3 = "left_leg/left_leg_joint_to_chest_3",
+    left_leg_joint_to_chest_4 = "left_leg/left_leg_joint_to_chest_4",
+    right_leg_joint_to_chest = "right_leg/right_leg_joint_to_chest",
+    right_leg_joint_to_chest_2 = "right_leg/right_leg_joint_to_chest_2",
+    right_leg_joint_to_chest_3 = "right_leg/right_leg_joint_to_chest_3",
+    right_leg_joint_to_chest_4 = "right_leg/right_leg_joint_to_chest_4",
+    right_arm_joint_to_chest = "right_arm/right_arm_joint_to_chest",
+    right_arm_joint_to_chest_2 = "right_arm/right_arm_joint_to_chest_2",
+    left_arm_joint_to_chest = "left_arm/left_arm_joint_to_chest",
+    left_arm_joint_to_chest_2 = "left_arm/left_arm_joint_to_chest_2",
+    head_joint_to_chest = "head/head_joint_to_chest",
+    left_leg_joint_to_ground = "left_leg/left_leg_joint_to_ground",
+    left_leg_joint_to_ground_2 = "left_leg/left_leg_joint_to_ground_2",
+    left_leg_joint_to_ground_3 = "left_leg/left_leg_joint_to_ground_3",
+    right_leg_joint_to_ground = "right_leg/right_leg_joint_to_ground",
+    right_leg_joint_to_ground_2 = "right_leg/right_leg_joint_to_ground_2",
+    right_leg_joint_to_ground_3 = "right_leg/right_leg_joint_to_ground_3",
+    ground_joint_to_left_leg = "ground/ground_joint_to_left_leg",
+    ground_joint_to_left_leg_2 = "ground/ground_joint_to_left_leg_2",
+    ground_joint_to_left_leg_3 = "ground/ground_joint_to_left_leg_3",
+    ground_joint_to_right_leg = "ground/ground_joint_to_right_leg",
+    ground_joint_to_right_leg_2 = "ground/ground_joint_to_right_leg_2",
+    ground_joint_to_right_leg_3 = "ground/ground_joint_to_right_leg_3",
+    right_arm = "right_arm",
+    right_arm_bone = "right_arm/right_arm_bone",
+    left_arm = "left_arm",
+    left_arm_bone = "left_arm/left_arm_bone",
+    right_leg = "right_leg",
+    right_leg_bone = "right_leg/right_leg_bone",
+    left_leg = "left_leg",
+    left_leg_bone = "left_leg/left_leg_bone",
+    head = "head",
+    head_bone = "head/head_bone",
+    ground = "ground"
+}
+
+function CreateAnchors(nodes, joints)
+    local anchors = {}
+    for key, joint in pairs(joints) do
+        anchors[key] = hg.TransformationMat4(nodes[joint]:GetTransform():GetPos(), nodes[joint]:GetTransform():GetRot())
+    end
+    return anchors
+end
+
+local joint_paths = {
+    right_arm_joint_anchor = "right_arm_joint_to_chest",
+    right_arm_2_joint_anchor = "right_arm_joint_to_chest_2",
+    left_arm_joint_anchor = "left_arm_joint_to_chest",
+    left_arm_2_joint_anchor = "left_arm_joint_to_chest_2",
+    right_leg_joint_anchor = "right_leg_joint_to_chest",
+    right_leg_2_joint_anchor = "right_leg_joint_to_chest_2",
+    right_leg_3_joint_anchor = "right_leg_joint_to_chest_3",
+    right_leg_4_joint_anchor = "right_leg_joint_to_chest_4",
+    left_leg_joint_anchor = "left_leg_joint_to_chest",
+    left_leg_2_joint_anchor = "left_leg_joint_to_chest_2",
+    left_leg_3_joint_anchor = "left_leg_joint_to_chest_3",
+    left_leg_4_joint_anchor = "left_leg_joint_to_chest_4",
+    head_joint_anchor = "head_joint_to_chest",
+    chest_joint_to_head_anchor = "chest_joint_to_head",
+    chest_joint_2_to_right_arm_anchor = "chest_joint_to_right_arm_2",
+    chest_joint_3_to_right_arm_anchor = "chest_joint_to_right_arm_3",
+    chest_joint_2_to_left_arm_anchor = "chest_joint_to_left_arm_2",
+    chest_joint_3_to_left_arm_anchor = "chest_joint_to_left_arm_3",
+    chest_joint_to_right_leg_anchor = "chest_joint_to_right_leg",
+    chest_joint_2_to_right_leg_anchor = "chest_joint_to_right_leg_2",
+    chest_joint_3_to_right_leg_anchor = "chest_joint_to_right_leg_3",
+    chest_joint_4_to_right_leg_anchor = "chest_joint_to_right_leg_4",
+    chest_joint_to_left_leg_anchor = "chest_joint_to_left_leg",
+    chest_joint_2_to_left_leg_anchor = "chest_joint_to_left_leg_2",
+    chest_joint_3_to_left_leg_anchor = "chest_joint_to_left_leg_3",
+    chest_joint_4_to_left_leg_anchor = "chest_joint_to_left_leg_4",
+    left_leg_5_joint_anchor = "left_leg_joint_to_ground",
+    left_leg_6_joint_anchor = "left_leg_joint_to_ground_2",
+    left_leg_7_joint_anchor = "left_leg_joint_to_ground_3",
+    right_leg_5_joint_anchor = "right_leg_joint_to_ground",
+    right_leg_6_joint_anchor = "right_leg_joint_to_ground_2",
+    right_leg_7_joint_anchor = "right_leg_joint_to_ground_3",
+    ground_joint_anchor = "ground_joint_to_left_leg",
+    ground_joint_2_anchor = "ground_joint_to_left_leg_2",
+    ground_joint_3_anchor = "ground_joint_to_left_leg_3",
+    ground_joint_4_anchor = "ground_joint_to_right_leg",
+    ground_joint_5_anchor = "ground_joint_to_right_leg_2",
+    ground_joint_6_anchor = "ground_joint_to_right_leg_3",
+}
+
 hg.AddAssetsFolder('assets_compiled')
 
 -- main window
@@ -60,32 +171,13 @@ scene = hg.Scene()
 hg.LoadSceneFromAssets("cube/cube_remastered.scn", scene, res, hg.GetForwardPipelineInfo())
 
 
-cam_mat = hg.TransformationMat4(hg.Vec3(0, 1.5, -5), hg.Vec3(hg.Deg(10), 0, 0))
+cam_mat = hg.TransformationMat4(hg.Vec3(0, 5, -20), hg.Vec3(hg.Deg(10), 0, 0))
 cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000)
 view_matrix = hg.InverseFast(cam_mat)
 c = cam:GetCamera()
 projection_matrix = hg.ComputePerspectiveProjectionMatrix(c:GetZNear(), c:GetZFar(), hg.FovToZoomFactor(c:GetFov()), hg.Vec2(res_x / res_y, 1))
 
--- scene:SetCurrentCamera(cam)	
-
--- lgt = hg.CreateLinearLight(scene, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(30), hg.Deg(30), 0)), hg.Color(1, 1, 1), hg.Color(1, 1, 1), 10, hg.LST_Map, 0.0001, hg.Vec4(2, 4, 10, 16))
-
--- cubeA_node, cubeA_rb = CreatePhysicCubeEx(scene, cubeA_size, hg.TranslationMat4(hg.Vec3(0.0, 0.5, 0)), cubeA_ref, {mat_grey}, hg.RBT_Static, 0.0)
--- cubeA_rb:SetFriction(0.0)
--- cubeA_rb:SetLinearDamping(0.0)
-
--- cubeB_node, cubeB_rb = CreatePhysicCubeEx(scene, cubeB_size, hg.TranslationMat4(hg.Vec3(0.0, 2.5, 0)), cubeB_ref, {mat_grey}, hg.RBT_Dynamic, 0.1)
--- cubeB_rb:SetFriction(0.0)
--- cubeB_rb:SetLinearDamping(0.0)
-
--- cubeC_node, cubeC_rb = CreatePhysicCubeEx(scene, cubeC_size, hg.TranslationMat4(hg.Vec3(2.5, 0.5, 0)), cubeC_ref, {mat_grey}, hg.RBT_Dynamic, 0.1)
--- cubeC_rb:SetFriction(0.0)
--- cubeC_rb:SetLinearDamping(0.0)
-
--- ground_node, ground_rb = CreatePhysicCubeEx(scene, ground_size, hg.TranslationMat4(hg.Vec3(0, -0.005, 0)), ground_ref, {mat_grey}, hg.RBT_Static, 0)
--- ground_rb:SetFriction(0.0)
-
-
+scene:SetCurrentCamera(cam)	
 
 -- scene physics
 physics = hg.SceneBullet3Physics()
@@ -95,19 +187,29 @@ dt_frame_step = hg.time_from_sec_f(1 / 60)
 
 clocks = hg.SceneClocks()
 
---NODE A-B
 
--- nodeA_anchor = hg.TransformationMat4(hg.Vec3(0.0, 0.5, 0.0),  hg.Vec3(0.0, 0.0, 0.0))
--- nodeB_anchor = hg.TransformationMat4(hg.Vec3(0.0, -2.0, 0.0),  hg.Vec3(0.0, 0.0, 0.0))
--- physics:Add6DofConstraint(cubeA_node, cubeB_node, nodeA_anchor, nodeB_anchor)
+local nodes = GetNodes(scene, node_paths)
+local anchors = CreateAnchors(nodes, joint_paths)
 
--- nodeA_anchor = hg.TransformationMat4(hg.Vec3(0.5, 0.5, 0.0),   hg.Vec3(0.0, 0.0, 0.0))
--- nodeB_anchor = hg.TransformationMat4(hg.Vec3(0.5, -2.0, 0.0),   hg.Vec3(0.0, 0.0, 0.0))
--- physics:Add6DofConstraint(cubeA_node, cubeB_node, nodeA_anchor, nodeB_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.right_arm, anchors.chest_joint_2_to_right_arm_anchor, anchors.right_arm_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.right_arm, anchors.chest_joint_3_to_right_arm_anchor, anchors.right_arm_2_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.left_arm, anchors.chest_joint_2_to_left_arm_anchor, anchors.left_arm_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.left_arm, anchors.chest_joint_3_to_left_arm_anchor, anchors.left_arm_2_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.right_leg, anchors.chest_joint_to_right_leg_anchor, anchors.right_leg_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.right_leg, anchors.chest_joint_2_to_right_leg_anchor, anchors.right_leg_2_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.right_leg, anchors.chest_joint_3_to_right_leg_anchor, anchors.right_leg_3_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.left_leg, anchors.chest_joint_to_left_leg_anchor, anchors.left_leg_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.left_leg, anchors.chest_joint_2_to_left_leg_anchor, anchors.left_leg_2_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.left_leg, anchors.chest_joint_3_to_left_leg_anchor, anchors.left_leg_3_joint_anchor)
+physics:Add6DofConstraint(nodes.chest, nodes.head, anchors.chest_joint_to_head_anchor, anchors.head_joint_anchor)
 
--- nodeA_anchor = hg.TransformationMat4(hg.Vec3(0.5, 0.5, 0.5),  hg.Vec3(0.0, 0.0, 0.0))
--- nodeB_anchor = hg.TransformationMat4(hg.Vec3(0.5, -2.0, 0.5),  hg.Vec3(0.0, 0.0, 0.0))
--- physics:Add6DofConstraint(cubeA_node, cubeB_node, nodeA_anchor, nodeB_anchor)
+physics:Add6DofConstraint(nodes.left_leg, nodes.ground, anchors.left_leg_5_joint_anchor, anchors.ground_joint_anchor)
+physics:Add6DofConstraint(nodes.left_leg, nodes.ground, anchors.left_leg_6_joint_anchor, anchors.ground_joint_2_anchor)
+physics:Add6DofConstraint(nodes.left_leg, nodes.ground, anchors.left_leg_7_joint_anchor, anchors.ground_joint_3_anchor)
+physics:Add6DofConstraint(nodes.right_leg, nodes.ground, anchors.right_leg_5_joint_anchor, anchors.ground_joint_4_anchor)
+physics:Add6DofConstraint(nodes.right_leg, nodes.ground, anchors.right_leg_6_joint_anchor, anchors.ground_joint_5_anchor)
+physics:Add6DofConstraint(nodes.right_leg, nodes.ground, anchors.right_leg_7_joint_anchor, anchors.ground_joint_6_anchor)
+
 
 -- --NODE A-C
 
@@ -133,18 +235,18 @@ local frame_count = 0
 while not keyboard:Down(hg.K_Escape) and hg.IsWindowOpen(win) do
     keyboard:Update()
 
-    -- physics:NodeWake(cube_node)
+    physics:NodeWake(nodes.chest)
 
     view_id = 0
     hg.SceneUpdateSystems(scene, clocks, dt_frame_step, physics, physics_step, 3)
     view_id, pass_id = hg.SubmitSceneToPipeline(view_id, scene, hg.IntRect(0, 0, res_x, res_y), true, pipeline, res)
 
-    -- Debug physics display
-    hg.SetViewClear(view_id, 0, 0, 1.0, 0)
-    hg.SetViewRect(view_id, 0, 0, res_x, res_y)
-    hg.SetViewTransform(view_id, view_matrix, projection_matrix)
-    rs = hg.ComputeRenderState(hg.BM_Opaque, hg.DT_Disabled, hg.FC_Disabled)
-    physics:RenderCollision(view_id, vtx_line_layout, line_shader, rs, 0)
+    -- -- Debug physics display
+    -- hg.SetViewClear(view_id, 0, 0, 1.0, 0)
+    -- hg.SetViewRect(view_id, 0, 0, res_x, res_y)
+    -- hg.SetViewTransform(view_id, view_matrix, projection_matrix)
+    -- rs = hg.ComputeRenderState(hg.BM_Opaque, hg.DT_Disabled, hg.FC_Disabled)
+    -- physics:RenderCollision(view_id, vtx_line_layout, line_shader, rs, 0)
 
     hg.Frame()
     hg.UpdateWindow(win)

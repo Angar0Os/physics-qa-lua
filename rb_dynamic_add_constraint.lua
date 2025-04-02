@@ -171,7 +171,7 @@ scene = hg.Scene()
 hg.LoadSceneFromAssets("cube/cube_remastered.scn", scene, res, hg.GetForwardPipelineInfo())
 
 
-cam_mat = hg.TransformationMat4(hg.Vec3(0, 5, -20), hg.Vec3(hg.Deg(10), 0, 0))
+cam_mat = hg.TransformationMat4(hg.Vec3(0, 7, -15), hg.Vec3(hg.Deg(10), 0, 0))
 cam = hg.CreateCamera(scene, cam_mat, 0.01, 1000)
 view_matrix = hg.InverseFast(cam_mat)
 c = cam:GetCamera()

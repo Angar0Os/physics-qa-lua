@@ -1,4 +1,4 @@
-g = require("harfang")
+hg = require("harfang")
 
 function CreatePhysicCubeEx(scene, size, mtx, model_ref, materials, rb_type, mass)
 	local rb_type = rb_type or hg.RBT_Dynamic
